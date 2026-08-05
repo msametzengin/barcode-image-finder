@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum ProductStatus {
+  Pending
+  Searching
+  Found
+  NotFound
+  Approved
+  Error
+}
+
+model ProductBarcode {
+  id                Int      @id @default(autoincrement())
+  barcode           String   @unique @db.VarChar(64)
+  productName       String?  @db.VarChar(255)
+  brand             String?  @db.VarChar(255)
+  category          String?  @db.VarChar(255)
+  selectedImageUrl  String?  @db.Text
+  selectedImagePath String?  @db.VarChar(500)
+  source            String?  @db.VarChar(100)
+  confidenceScore   Int      @default(0)
+  status            ProductStatus @default(Pending)
+  isApproved        Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  imageCandidates ProductImageCandidate[]
+  searchLogs      SearchLog[]
+
+  @@index([status])
+  @@index([brand])
+  @@index([productName])
+}
+
+model ProductImageCandidate {
+  id               Int      @id @default(autoincrement())
+  productBarcodeId Int
+  imageUrl         String   @db.Text
+  sourceUrl        String?  @db.Text
+  sourceName       String   @db.VarChar(100)
+  width            Int?
+  height           Int?
+  score            Int      @default(0)
+  isSelected       Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  productBarcode ProductBarcode @relation(fields: [productBarcodeId], references: [id], onDelete: Cascade)
+
+  @@index([productBarcodeId])
+  @@index([sourceName])
+  @@index([score])
+}
+
+model SearchLog {
+  id               Int      @id @default(autoincrement())
+  productBarcodeId Int?
+  barcode          String?  @db.VarChar(64)
+  provider         String   @db.VarChar(100)
+  requestUrl       String?  @db.Text
+  responseStatus   String?  @db.VarChar(100)
+  message          String?  @db.Text
+  createdAt        DateTime @default(now())
+
+  productBarcode ProductBarcode? @relation(fields: [productBarcodeId], references: [id], onDelete: SetNull)
+
+  @@index([productBarcodeId])
+  @@index([barcode])
+  @@index([provider])
+  @@index([createdAt])
+}
