@@ -70,7 +70,7 @@ Genel arama sırası şu şekildedir:
 4. Sonuç bulunamazsa DuckDuckGoImages üzerinden ürün adı ve marka ile görsel aranır.
 5. Uygun görsel bulunamazsa kullanıcı manuel olarak görsel ekleyebilir.
 
-Bulunan görseller doğrudan kesin doğru kabul edilmez. Kullanıcı görsel adaylarını kontrol eder ve uygun olanı onaylar.
+Kullanıcı görsel adaylarını kontrol eder ve uygun olanı onaylar.
 
 ## Excel Dosya Formatı
 
@@ -126,7 +126,7 @@ Sistemde ürünlerin durumları şu şekilde takip edilir:
 
 Projeyi klonladıktan sonra proje klasöründe terminal açın.
 
-Bağımlılıkları yükleyin:
+Gerekenleri yükleyin:
 
 ```powershell
 npm.cmd install
@@ -215,7 +215,7 @@ Ayrıca teslim klasörü oluşturularak barkod Excel dosyası ve ürün görsell
 
 Bu GitHub reposunda yalnızca projenin kaynak kodları ve uygulama ekran görüntüleri bulunmaktadır.
 
-Ürün görselleri, dışa aktarılan Excel dosyaları ve veritabanı yedeği dosya boyutunu artırmamak için repoya eklenmemiştir. Bu dosyalar proje teslim paketinde ayrıca verilmiştir.
+Ürün görselleri, dışa aktarılan Excel dosyaları ve veritabanı yedeği dosya boyutunu artırmamak için repoya eklenmemiştir.
 
 ## Notlar
 
